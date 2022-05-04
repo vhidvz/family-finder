@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>FamilyFinder</title>
+    <!-- CSS FILES -->
+    <link href="./css/jsonTree.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.1.7/css/uikit.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/dataTables.uikit.min.css">
+    <style>
+        .wrap::before {
+            position: absolute;
+            height: 100vh;
+            width: 100vw;
+            content: '';
+            z-index: 1;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .lead {
+            font-size: 1.175em;
+            font-weight: 300;
+        }
+
+        .uk-logo img {
+            height: 28px;
+        }
+
+        #json-tree ul {
+            list-style: none;
+        }
+
+        .jsontree_child-nodes {
+            margin-left: 0px;
+            margin-top: 0px;
+        }
+    </style>
+
+    <!-- JS FILES -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
+
+<body
+    class="wrap uk-background-norepeat uk-background-cover uk-background-center-center uk-cover-container uk-background-secondary">
+    <div class="uk-light">
+        <img data-srcset="https://picsum.photos/640/700/?random 640w,
+		             https://picsum.photos/960/700/?random 960w,
+		             https://picsum.photos/1200/900/?random 1200w,
+		             https://picsum.photos/2000/1000/?random 2000w" sizes="100vw"
+            data-src="https://picsum.photos/1200/900/?random" alt="" data-uk-cover data-uk-img>
+        <div class="uk-flex uk-flex-center uk-flex-middle uk-height-viewport uk-position-z-index uk-position-relative"
+            data-uk-height-viewport="min-height: 400">
+
+            <!-- NAV -->
+            <div class="uk-position-top">
+                <div class="uk-container uk-container-small">
+                    <nav class="uk-navbar-container uk-navbar-transparent" data-uk-navbar>
+                        <div class="uk-navbar-left">
+                            <div class="uk-navbar-item">
+                                <a class="uk-logo" href="">
+                                    <h3 style="margin: 0 0 0 0"><span class="uk-text-bold">Adam</span><span
+                                            class="uk-text-muted">Finder</span></h3>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="uk-navbar-right">
+                            <ul class="uk-navbar-nav">
+                                <li class="uk-visible@s"><a href="">Features</a></li>
+                                <li class="uk-visible@s"><a href="">Contact</a></li>
+                                <li class="uk-visible@s"><a href="">About</a></li>
+                                <li class="uk-active uk-visible@m"><a href="" data-uk-icon="home"></a></li>
+                            </ul>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+            <!-- /NAV -->
+            <!-- TEXT -->
+            <div class="uk-container uk-container-small uk-flex-auto uk-text-center"
+                data-uk-scrollspy="target: > .animate; cls: uk-animation-slide-bottom-small uk-invisible; delay: 300">
+                <h2 class="uk-heading-primary animate uk-invisible" style="font-weight: 700;">Find a person around the
+                    world...!</h2>
+                <div class="uk-width-4-5@m uk-margin-auto animate uk-invisible">
+                    <p class="lead">Sites that we now supported is pipl.com|locatefamily.com.</br>
+                        Now you can search by phone|email|name|family|location|[string]*.</br>
+                        </br>
+                        <a name="example" class="uk-text-muted">site:locatefamily.com name:&Clark phone:|440000000000
+                            family:Rice</a>
+                    </p>
+                </div>
+                <div class="uk-margin-medium-top animate uk-invisible" data-uk-margin
+                    data-uk-scrollspy-class="uk-animation-fade uk-invisible">
+                    <form id="search" class="uk-first-column">
+                        <div class="uk-grid" uk-grid="">
+                            <div class="uk-inline uk-width-1-1 uk-first-column">
+                                <span class="uk-form-icon uk-form-icon-flip uk-icon" data-uk-icon="icon: world"><svg
+                                        width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"
+                                        data-svg="world">
+                                        <path fill="none" stroke="#000" d="M1,10.5 L19,10.5"></path>
+                                        <path fill="none" stroke="#000" d="M2.35,15.5 L17.65,15.5"></path>
+                                        <path fill="none" stroke="#000" d="M2.35,5.5 L17.523,5.5"></path>
+                                        <path fill="none" stroke="#000"
+                                            d="M10,19.46 L9.98,19.46 C7.31,17.33 5.61,14.141 5.61,10.58 C5.61,7.02 7.33,3.83 10,1.7 C10.01,1.7 9.99,1.7 10,1.7 L10,1.7 C12.67,3.83 14.4,7.02 14.4,10.58 C14.4,14.141 12.67,17.33 10,19.46 L10,19.46 L10,19.46 L10,19.46 Z">
+                                        </path>
+                                        <circle fill="none" stroke="#000" cx="10" cy="10.5" r="9"></circle>
+                                    </svg></span>
+                                <input id="query" class="uk-input uk-form-large" required="" placeholder="Search..."
+                                    type="text" pattern="^((\w+:[&|]?(\w+[@+.]?)+)[\s])*(\w+:[&|]?(\w+[@+.]?)+)$">
+                            </div>
+                        </div>
+                        <div class="uk-grid" uk-grid="">
+                            <div class="uk-width-1-1">
+                                <div class="uk-form-controls">
+                                    <button id="submit" type="submit"
+                                        class="uk-button uk-button-default uk-button-large uk-width-1-1">
+                                        Submit A Query...
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!-- /TEXT -->
+            <!-- FOOT -->
+            <div class="uk-position-bottom-center uk-position-small">
+                <span class="uk-text-small uk-text-center">© 2019 | <a href="https://github.com/zzseba78/Kick-Off"
+                        title="Created by KickOff">Created by KickOff</a> | Built with <a href="http://getuikit.com"
+                        title="Visit UIkit 3 site" target="_blank" data-uk-tooltip><span
+                            data-uk-icon="uikit"></span></a></span>
+            </div>
+            <!-- /FOOT -->
+        </div>
+    </div>
+    <!-- This is the modal -->
+    <div id="json-tree-modal" class="uk-modal-full" uk-modal>
+        <div class="uk-modal-dialog">
+            <button class="uk-modal-close-full uk-close-large" type="button" uk-close></button>
+            <div class="uk-grid-collapse uk-child-width-1-2@s uk-flex-top" uk-grid>
+                <div class="uk-background-cover"
+                    style="background-image: url('https://unsplash.it/1800/1200/?random'); position: sticky; top: 0px;"
+                    uk-height-viewport>
+                </div>
+                <div class="uk-padding-large">
+                    <div id="locatefamily-visibility" hidden>
+                        <h2>LocateFamily Site...</h2>
+                        </br>
+                        <table id="locatefamily" class="uk-table uk-table-hover uk-table-striped" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Family</th>
+                                    <th>Phone</th>
+                                    <th>Location</th>
+                                    <th>Zipcode</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div id="all-data">
+                        </br>
+                        <h2>All Data Feched... (JOSN)</h2>
+                        <div id="json-tree"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- This is the modal -->
+    <!-- JS FILES -->
+    <script src="./js/jsonTree.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.1.7/js/uikit.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.1.7/js/uikit-icons.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/dataTables.uikit.min.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            // locatefamily table
+            lfTable = $('#locatefamily').DataTable({
+                "pagingType": "simple",
+                "aLengthMenu": [[3, 5, 7], [3, 5, 7]],
+                "iDisplayLength": 3
+            });
+
+            // for example
+            $('[name=example]').click(function (e) {
+                e.preventDefault()
+                $('#query').val(e.target.innerText)
+            })
+
+            // form submit
+            $('#search').submit(function (e) {
+                e.preventDefault()
+
+                lfTable.clear().draw();
+                $("#locatefamily-visibility").attr("hidden", "")
+                $("#submit").attr("disabled", "");
+                $("#submit").html('<div uk-spinner="" class="uk-spinner uk-icon"></div>');
+
+                UIkit.notification('Please Wait...!');
+                $.post("/", { query: $('#query').val() }, function (data, status) {
+                    if (status != 'success') {
+                        UIkit.notification('We got failure in finding a person, please try again later!', status);
+                    } else {
+                        UIkit.notification('You Succeed...!', status);
+
+                        UIkit.modal($('#json-tree-modal')).show();
+
+                        $("#json-tree").empty()
+                        jsonTree.create(data, $("#json-tree")[0]);
+
+                        // locatefamily table rendering
+                        function addLocateFamilyDataTable(data) {
+                            $('#locatefamily-visibility').removeAttr("hidden");
+                            _data = Object.values(data)
+                            for (let [_, item] of Object.entries(_data)) {
+                                lfTable.row.add([item.name, item.family, item.phone, item.location, item.zipcode]).draw();
+                            }
+                        }
+
+                        if (Array.isArray(data)) {
+                            data.forEach(element => {
+                                if (element.site == 'locatefamily.com' && element.fetched.status == 200) {
+                                    addLocateFamilyDataTable(element.fetched.data)
+                                }
+                            })
+                        } else {
+                            if (data.site == 'locatefamily.com' && data.status == 200) {
+                                addLocateFamilyDataTable(data.data)
+                            }
+                        }
+                    }
+
+                    $("#submit").removeAttr("disabled");
+                    $("#submit").text("Submit A Query...");
+                });
+            })
+        })
+    </script>
+</body>
+
+</html>

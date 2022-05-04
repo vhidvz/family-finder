@@ -1,0 +1,22 @@
+{
+    "_arguments": "OneOf|AllOf",
+    "_support": "phone|email|name|family|location|string",
+    "_sites": "locatefamily.com",
+    "_comment": "the arguments can have the two values OneOf or AllOf, and you can have only one optional argument that start with the [ character.\nNumber of optional arguments determined by the * at the end of optinal support which means infinite optional args.",
+
+    "locatefamily.com": {
+        "site": "locatefamily.com",
+        "type": "webdriver:http://www.google.com",
+        "support": "name|family|location|phone",
+        "arguments:OneOf": {
+            "phone": "[&|]?(\\d{10})|(\\d{3}-\\d{3}-\\d{4})",
+            "name": "[&|]?([\\w\\s]+)",
+            "family": "[&|]?([\\w\\s]+)",
+            "location": "[&|]?([\\w\\s]+)"
+        },
+        "returns": {
+            "status": "code",
+            "data": "json"
+        }
+    }
+}

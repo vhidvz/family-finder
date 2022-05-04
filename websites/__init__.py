@@ -1,0 +1,1 @@
+from .locatefamily import getPersons as getPersonsByLocateFamily
